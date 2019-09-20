@@ -700,6 +700,14 @@ class LudicrousDB extends wpdb {
 					} else {
 						$this->set_sql_mode( array(), $this->dbhs[ $dbhname ] );
 						if ( $this->select( $name, $this->dbhs[ $dbhname ] ) ) {
+
+							if ( ! isset( $queries ) ) {
+								$queries = null;
+							}
+							if ( ! isset( $lag ) ) {
+								$lag = null;
+							}
+
 							$this->current_host         = $host_and_port;
 							$this->dbh2host[ $dbhname ] = $host_and_port;
 							$this->last_connection      = compact( 'dbhname', 'host', 'port', 'user', 'name', 'tcp', 'elapsed', 'success', 'queries', 'lag' );
@@ -789,6 +797,14 @@ class LudicrousDB extends wpdb {
 
 		$this->set_charset( $this->dbhs[ $dbhname ], $charset, $collate );
 
+		if ( ! isset( $read ) ) {
+			$read = null;
+		}
+
+		if ( ! isset( $write ) ) {
+			$write = null;
+		}
+		
 		$this->dbh                      = $this->dbhs[ $dbhname ]; // needed by $wpdb->_real_escape()
 		$this->last_used_server         = compact( 'host', 'user', 'name', 'read', 'write' );
 		$this->used_servers[ $dbhname ] = $this->last_used_server;
